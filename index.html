@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cheapster.in — Compare Prices. Save Smart.</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header id="site-header" class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">Cheapster<span class="logo-accent">.in</span></a>
+
+      <div class="header-search" id="header-search" hidden>
+        <input type="text" id="header-search-input" placeholder="Search any product..." />
+        <button id="header-search-btn" class="btn-gold-sm">Search</button>
+      </div>
+
+      <div class="auth-slot">
+        <button id="login-trigger-btn" class="btn-outline-gold">Login / Sign Up</button>
+
+        <div id="profile-dropdown" class="profile-dropdown" hidden>
+          <button id="profile-btn" class="profile-btn">
+            <span id="profile-initial">U</span>
+          </button>
+          <div class="dropdown-menu" id="dropdown-menu" hidden>
+            <span class="dropdown-identifier" id="dropdown-identifier"></span>
+            <button id="logout-btn" class="dropdown-item">Logout</button>
+            <button id="delete-account-btn" class="dropdown-item dropdown-danger">Delete Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO / SEARCH ===================== -->
+  <section class="hero" id="hero-section">
+    <h1 class="hero-title">Find it <span class="text-gold">cheaper.</span> Everywhere.</h1>
+    <p class="hero-subtitle">Real-time price comparison across Amazon &amp; Flipkart — plus Diwali Dhamaka cashback.</p>
+
+    <div class="hero-search-bar">
+      <input type="text" id="hero-search-input" placeholder="Paste a product link or type a product name..." />
+      <button id="hero-search-btn" class="btn-gold">Compare Now</button>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <main class="results-wrap" id="results-wrap" hidden>
+    <div class="results-meta">
+      <span id="results-query-label"></span>
+      <span id="results-cache-badge" class="cache-badge" hidden>from cache</span>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </main>
+
+  <div id="loading-spinner" class="loading-spinner" hidden>
+    <div class="spinner"></div>
+    <p>Fetching live prices...</p>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <p>&copy; 2026 Cheapster.in — All rights reserved.</p>
+    <div class="footer-links">
+      <button class="link-btn" id="open-terms">Terms &amp; Conditions</button>
+      <span class="dot">•</span>
+      <button class="link-btn" id="open-privacy">Privacy Policy</button>
+    </div>
+  </footer>
+
+  <!-- ===================== MODAL: LOGIN ===================== -->
+  <div class="modal-overlay" id="login-modal-overlay" hidden>
+    <div class="modal glass-modal">
+      <button class="modal-close" data-close="login-modal-overlay">&times;</button>
+      <h2>Welcome to Cheapster</h2>
+      <p class="modal-subtitle">Login to continue your cashback claim.</p>
+
+      <button id="google-login-btn" class="btn-social">Continue with Google</button>
+
+      <div class="divider"><span>or</span></div>
+
+      <div id="phone-login-step-1">
+        <label class="field-label">WhatsApp / Phone Number</label>
+        <input type="tel" id="phone-input" maxlength="10" placeholder="10-digit mobile number" />
+        <button id="send-otp-btn" class="btn-gold full-width">Send OTP</button>
+      </div>
+
+      <div id="phone-login-step-2" hidden>
+        <label class="field-label">Enter OTP</label>
+        <input type="text" id="otp-input" maxlength="6" placeholder="6-digit OTP" />
+        <button id="verify-otp-btn" class="btn-gold full-width">Verify &amp; Continue</button>
+      </div>
+
+      <p class="modal-error" id="login-error"></p>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: CLAIM (Diwali Dhamaka) ===================== -->
+  <div class="modal-overlay" id="claim-modal-overlay" hidden>
+    <div class="modal glass-modal">
+      <button class="modal-close" data-close="claim-modal-overlay">&times;</button>
+
+      <div id="claim-form-view">
+        <h2 class="text-gold">🪔 Diwali Dhamaka Cashback</h2>
+        <p class="modal-subtitle">You've been redirected to complete your order. Register your claim below to be eligible.</p>
+
+        <label class="field-label">WhatsApp Phone Number</label>
+        <input type="tel" id="claim-phone-input" maxlength="10" placeholder="10-digit WhatsApp number" />
+
+        <label class="field-label">Store Order ID</label>
+        <input type="text" id="claim-order-id-input" placeholder="e.g. OD12345678" />
+
+        <input type="hidden" id="claim-platform-input" value="" />
+
+        <button id="submit-claim-btn" class="btn-gold full-width">Submit Entry</button>
+        <p class="modal-error" id="claim-error"></p>
+      </div>
+
+      <div id="claim-success-view" hidden>
+        <h2 class="text-gold">FORM SUBMITTED SUCCESSFULLY! 🎉</h2>
+        <p class="modal-subtitle">
+          Claim successfully registered. If you are selected as a lucky winner,
+          our team will contact you via WhatsApp for payout details.
+        </p>
+        <button class="btn-outline-gold full-width" data-close="claim-modal-overlay">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MODAL: TERMS & PRIVACY ===================== -->
+  <div class="modal-overlay" id="legal-modal-overlay" hidden>
+    <div class="modal glass-modal legal-modal">
+      <button class="modal-close" data-close="legal-modal-overlay">&times;</button>
+      <div id="terms-content" hidden>
+        <h2>Terms &amp; Conditions</h2>
+        <ul class="legal-list">
+          <li>All cashback claims are subject to a <strong>60-day payout window post-delivery</strong>.</li>
+          <li>Cancelled or returned orders are <strong>automatically rejected</strong> from eligibility.</li>
+          <li>A <strong>maximum single cashback liability limit</strong> applies per claim, per user.</li>
+          <li>Cheapster.in acts solely as a price-comparison and affiliate-referral platform; all purchases are made directly with the respective retailer.</li>
+          <li>Cheapster.in reserves the right to disqualify fraudulent or duplicate claims at its sole discretion.</li>
+        </ul>
+      </div>
+      <div id="privacy-content" hidden>
+        <h2>Privacy Policy</h2>
+        <ul class="legal-list">
+          <li>We collect only the minimum data required: phone number/email for login, and order ID/phone for cashback claims.</li>
+          <li>We do not sell personal data to third parties. Affiliate links are routed through Cuelinks for commission tracking only.</li>
+          <li>Users may request full account and data deletion at any time via the "Delete Account" option in their profile menu.</li>
+          <li>Session data is stored securely and cleared upon logout.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
