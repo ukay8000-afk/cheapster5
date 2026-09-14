@@ -3,6 +3,7 @@
 // Talks to the FastAPI backend (main.py). Update API_BASE for your deployment.
 // ============================================================================
 
+const API_BASE_URL = "https://cheapster5-production.up.railway.app";
 const API_BASE = window.CHEAPSTER_API_BASE || "http://localhost:8000";
 
 // In-memory app state (no browser storage — session lives for the tab only,
